@@ -1,0 +1,248 @@
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>PSO2 Mining</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='http://fonts.googleapis.com/css?family=Nunito:400,300' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="static/css/style.css">
+    <!-- Latest compiled and minified CSS for boostrap-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <!-- jQuery library for bootstrap-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  
+   
+   
+    <script src="js/demo.js"></script>
+   
+    <script src="js/slideshow.js"></script>
+    
+    <!-- Latest compiled JavaScript for bootstrap -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    
+    <div class="container">
+        <h1 id="theTitle"> <img src="https://d30y9cdsu7xlg0.cloudfront.net/png/14979-200.png" style="width:50px;height:45px;"> Mining Made Easy</h1>
+        <hr />
+        <div class="navbar">
+            <ul class="nav nav-tabs">
+                <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/home">These</a></li>
+                <li role="presentation"><a href="${pageContext.request.contextPath}/idk">aren't</a></li>
+                <li role="presentation"><a href="${pageContext.request.contextPath}/notdone">done</a></li>
+            </ul>
+        </div>
+        
+        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+              <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+              <li data-target="#myCarousel" data-slide-to="1"></li>
+              <li data-target="#myCarousel" data-slide-to="2"></li>
+            </ol>
+          
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner">
+              <div class="item active">
+                <img src="static/img/logo_pso2.png" alt="Los Angeles">
+              </div>
+          
+              <div class="item">
+                <img src="static/img/logo_pso2.png" alt="Chicago">
+              </div>
+          
+              <div class="item">
+                <img src="static/img/logo_pso2.png" alt="New York">
+              </div>
+            </div>
+          
+            <!-- Left and right controls -->
+            <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+              <span class="glyphicon glyphicon-chevron-left"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#myCarousel" data-slide="next">
+              <span class="glyphicon glyphicon-chevron-right"></span>
+              <span class="sr-only">Next</span>
+            </a>
+          </div>
+       
+        <div class="container">
+            <div class = "row">
+            <div class=" col-md-8">
+                <h2>The Harvested Material</h2>
+                <table id="harvestedTable" class="table table-hover">
+                    <tr>
+                        <th width="40%">Name</th>
+                        <th width="40%">Type</th>
+                        <th width="10%"></th>
+                        <th width="10%"></th>
+                
+                    </tr>
+                    <tbody id="harvestedRows"></tbody>
+                </table>
+                
+            </div>
+        <div class="col-md-3">
+            <form class="form-horizontal" role="form">
+
+                <div class="form-group">
+                    <!-- First part of the form to get the type of the object harvested -->
+                    <label for="add-harvested-type" class="col-md-4 control-label">Type:</label>
+                    <div clas="col-md-8">
+                        <div id="outer">
+                            <div id="inner">
+                                <select class="form-control" id="add-harvested-type">
+                                    <option>Jewel</option>
+                                    <option>Mineral</option>
+                                    <option>Other</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <!-- Second part of the form to get the name of the harvested object -->
+                    <label for="add-harvested-name" class="col-md-4 control-label">Name:</label>
+                    <div class="col-md-8">
+                        <input id="add-harvested-name" name="name" type="text" class="form-control" placeholder="Name">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <!-- Third part of the form to get the planet that the object is harvested from -->
+                    <label for="add-harvested-planet" class="col-md-4 control-label">Planet:</label>
+                    <div class="col-md-8">
+                        <input id="add-harvested-planet" name="planet" type="text" class="form-control"
+                            placeholder="Planet">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <!-- Fourth part of the form to get the area on the planet where the object is harvested. Might make it show options based on the planet it is from -->
+                    <label for="add-harvested-area" class="col-md-4 control-label">Area:</label>
+                    <div class="col-md-8">
+                        <input id="add-harvested-area" name="area" type="text" class="form-control" placeholder="Area">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <!-- Fifth part of the form to get the size of the object that is harvested -->
+                    <label for="add-harvested-size" class="col-md-4 control-label">Size:</label>
+                    <div class="col-md-8">
+                        <div id="outer">
+                            <div id="inner">
+                                <select class="form-control" id="add-harvested-size">
+                                    <option>Small</option>
+                                    <option>Medium</option>
+                                    <option>Large</option>
+                                    <option>Giant</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                
+                </div>
+
+                <div class="form-group">
+                    <!-- Final part of the form to get the best food used to boost the chances of harvesting the object. Might make it dependent on the size of the object for choices. -->
+                    <label for="add-harvested-food">Best Food:</label>
+                    <div class="col-md-8>">
+                        <input id="add-harvested-food" name="food" type="text" class="form-control"
+                            placeholder="Best Food">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-4 col-md-8">
+                        <button id="add-button" name="harvestedName" type="submit" class="btn btn-default">Add Object</button>
+                    </div>
+                </div>
+            </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<div class="container">
+    <div class= "col-md-4 first">
+        <h1>What this game is about.</h1>
+        <article>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+             ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco 
+             laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit
+             in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+             cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</article>
+
+    </div>
+    <div class= "col-md-4 second">
+        <h1>Why mining is important</h1>
+        <article>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+            ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco 
+            laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit
+            in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+            cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</article>
+    </div>
+    <div class= "col-md-4">
+        <h3>Please sign up for our daily news letter on all things mining!</h3>
+        <form class ="form-horizontal form" id="contact-form">
+            <div class="form-group">
+                <!--Asks for the user's name.-->
+                <label for="name" class="col-md-4 control-label">Name:</label>
+                <div class="col-md-8">
+                    <input id="name" name="name" type="text" class="form-control" placeholder="Name">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <!-- This asks the the user's email address. -->
+                <label for="email" class="col-md-4 control-label">Email:</label>
+                <div class="col-md-8">
+                    <input id="email" name="email" type="text" class="form-control"
+                        placeholder="www.email@example.com">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-4 col-md-8">
+                    <button onclick="buttonFunction(email)" id="user-button" type="button" name="userButton" class="btn btn-primary">Sign Up</button>
+                </div>
+            </div>
+        </form>
+        <br>
+        <br>
+
+        <p id="display-name"></p>
+
+        <br>
+        <br>
+
+    </div>
+    
+  
+   
+</div>
+
+    <footer class= "footer">
+        <div class="container">
+            
+            <div class="col-md">
+               <h3 id="footer-text">
+                   Thank you for visiting!
+               </h3>
+            </div>
+            
+        </div>
+
+
+    </footer>
+
+</body>
+
+
+</html>

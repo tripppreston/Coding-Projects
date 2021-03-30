@@ -1,0 +1,467 @@
+ORIGINAL LEFT SIDE OF HOME PAGE
+        <div id="pop1" class="recent col-md-12">
+            <div class="col-md-6 col-md-offset-2">
+                <h2>RECENT BLOG</h2>
+            </div>
+            <div class="col-md-4">
+                <h4 style="margin-top:33px;">dd/mm/yy</h4>
+            </div>
+            <div id="pic-div1" class="pic-div-md col-md-6 col-md-offset-2">
+                <img src="https://www.extremetech.com/wp-content/uploads/2015/12/DolphinJump-640x353.jpg" class="image-responsive img-rounded" style="height:198px;width:425px"/>
+            </div>
+            <div id="text-div1" class="text-div-md col-md-8 col-md-offset-2">
+                <p>This TEXT-DIV1 placeholder text is gonna be HUGE.
+                    I think my strongest asset maybe by far is my temperament. 
+                    I have a placeholding temperament. We are going to make placeholder text great again. 
+                    Greater than ever before.
+                    I’m the best thing that ever happened to placeholder text. Look at these words. 
+                    Are they small words? And he referred to my words - if they're small, something 
+                    else must be small. I guarantee you there's no problem, I guarantee.
+                </p>
+
+            </div>
+            <div class="col-xs-2 col-xs-offset-2" id="comments1">
+                <h3>(4)<span class="glyphicon glyphicon-comment"></span></h3>
+            </div>
+            <div class="col-xs-2 col-xs-offset-5" id="comments1">
+                <h3>(3) <span class="glyphicon glyphicon-thumbs-up"></span></h3>
+            </div>
+
+        </div>
+        <div id="pop2" class="pop col-md-12">
+            <div class="col-md-6 col-md-offset-2">
+                <h2>RECENT BLOG </h2>
+            </div>
+            <div class="col-md-4">
+                <h4 style="margin-top:33px;">dd/mm/yy</h4>
+            </div>
+            <div id="pic-div2" class="pic-div-md col-md-6 col-md-offset-2">
+                <img src="https://s-media-cache-ak0.pinimg.com/736x/9d/d1/7e/9dd17e692112987dfd6d2b1a0f23e11d.jpg" class="image-responsive img-rounded" style="height:198px;width:425px"/>
+            </div>
+            <div id="text-div2" class="text-div-custom col-md-8 col-md-offset-2">
+                <p>This TEXT-DIV2 placeholder text is gonna be HUGE. 
+                    I think my strongest asset maybe by far is my temperament. 
+                    I have a placeholding temperament. We are going to make placeholder text great again. 
+                    Greater than ever before.
+                    I’m the best thing that ever happened to placeholder text. Look at these words. 
+                    Are they small words? And he referred to my words - if they're small, something 
+                    else must be small. I guarantee you there's no problem, I guarantee.
+                </p>
+            </div>
+            <div class="col-xs-2 col-xs-offset-2" id="comments1">
+                <h3>(4)<span class="glyphicon glyphicon-comment"></span></h3>
+            </div>
+            <div class="col-xs-2 col-xs-offset-5" id="comments1">
+                <h3>(3) <span class="glyphicon glyphicon-thumbs-up"></span></h3>
+            </div>
+        </div>
+        <div id="pop3" class="pop col-md-12">
+            <div class="col-md-6 col-md-offset-2">
+                <h2>RECENT BLOG </h2>
+            </div>
+            <div class="col-md-4">
+                <h4 style="margin-top:33px;">dd/mm/yy</h4>
+            </div>
+            <div id="pic-div3" class="pic-div-md col-md-6 col-md-offset-2">
+                <img src="http://1.bp.blogspot.com/-SIviAWQfknc/UCfPjpyX6lI/AAAAAAAAAeA/_Cpg5HT9q0s/s1600/Rainbow+dolphin+from+Bridge+to+Lemuria--Finding+Our+Way+Home.jpg" class="image-responsive img-rounded" style="height:198px;width:425px"/>
+            </div>
+            <div id="text-div3" class="text-div-custom col-md-8 col-md-offset-2">
+                <p>This TEXT-DIV3 placeholder text is gonna be HUGE. 
+                    I think my strongest asset maybe by far is my temperament. 
+                    I have a placeholding temperament. We are going to make placeholder text great again. 
+                    Greater than ever before.
+                    I’m the best thing that ever happened to placeholder text. Look at these words. 
+                    Are they small words? And he referred to my words - if they're small, something 
+                    else must be small. I guarantee you there's no problem, I guarantee.
+                </p>
+            </div>
+            <div class="col-xs-2 col-xs-offset-2" id="comments1">
+                <h3>(4)<span class="glyphicon glyphicon-comment"></span></h3>
+            </div>
+            <div class="col-xs-2 col-xs-offset-5" id="comments1">
+                <h3>(3) <span class="glyphicon glyphicon-thumbs-up"></span></h3>
+            </div>
+        </div>-->
+
+///////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
+backup of this function from wednesday night
+function processPopularPosts(posts) {
+    var popDiv = $('#popDivToFill');
+    $.each(posts, function (index, post) {
+
+        popDiv.append($("<div>").attr({'class': "col-md-12 right-min",
+            'data-post-id': post.postID})
+                .append($("<h4>").attr({'class': "title-sm col-md-12"}).text(post.title))
+                // I removed the date here.  it's unnecessary, and caused all sorts of formatting issues
+                .append($("<div>").attr({'class': "content-div-sm col-md-6"})
+                        .append($("<img>").attr({'src': post.photoUrl,
+                            'class': "pic-sm img-responsive img-rounded"})))
+                .append($("<div>").attr({'class': "content-div-sm col-md-6"})
+                        .append($("<p>").attr({'class': "col-xs-12"})
+                                .text(post.synopsis.substring(0, 83)))
+                        .append($("<div>").attr({'class': "col-xs-12"})
+                                .append($("<h4>").text("( # )")
+                                        .attr({'class': "col-xs-6"})
+                                        .append($("<span>").attr({
+                                            'class': "glyphicon glyphicon-comment"})))
+                                .append($("<h4>").text("( " + post.likes + " )")
+                                        .attr({'class': "col-xs-6"})
+                                        .append($("<span>")
+                                                .attr({
+                                                    'class': "glyphicon glyphicon-thumbs-up"
+                                                }))))
+
+
+                        ));
+    });
+}
+
+
+Backup of index.jsp from Wed night
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Index Page</title>
+        <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/css/dolphinStyles.css" rel="stylesheet">
+        <!-- Icon -->
+        <link rel="shortcut icon" href="${pageContext.request.contextPath}/img/icon.png">
+
+        <style>
+
+            @import url('https://fonts.googleapis.com/css?family=Oswald');
+
+            body{
+                background: url('http://wallpapercave.com/wp/RB16JiE.jpg');
+                background-repeat: no-repeat;
+                background-position: center center;
+                background-attachment: fixed;
+                -webkit-background-size: cover;
+                -moz-background-size: cover;
+                -o-background-size: cover;
+                background-size: cover;
+                font-family: 'Oswald', sans-serif;
+                font-weight:bold;
+                color:white;
+            }
+
+            #left,
+            #right,
+            #nav-div,
+            .pop,
+            .content-div-sm,
+            .pic-div-md,
+            .text-div-custom,
+            .right-min,
+            #search-div,
+            #search-input-div,
+            #search-button-div,
+            #comments1,
+            #icons{
+                /*border: solid 1px white;*/
+                padding: 0px;
+            }
+
+            /********************************
+                START Custom Classes for JS
+            *********************************/
+         
+            .content-div-sm{
+                height:148px;
+                width:210px;
+                margin-top:10px;
+            }
+            
+            .date-md{
+                margin-top:33px;
+            }
+            
+            .date-sm{
+
+            }
+
+            .pic-div-md{
+                height:200px;
+                margin-top:20px;
+            }
+            
+            .pic-md{
+                height:198px;width:425px;
+            }
+
+            .pic-sm{
+                height:148px;width:210px;
+            }
+            
+            .recent{
+                height:500px;
+            }
+
+            .right-min{
+                height:300px;
+            }
+
+            .text-div-md{
+                height:120px;
+                margin-top:20px;
+            }
+           
+            .title-md{
+
+            }
+             
+            .title-sm{
+
+            }
+
+            /******************************
+                END Custom Classes for JS
+            *******************************/
+
+            #search-div{
+                height:310px;
+            }
+            #search-input-div{
+            }
+            #search-button-div{
+            }
+
+            #comments1{
+                height:50px;
+            }
+            #icons{
+                height:40px;
+            }
+        </style>
+    </head>
+    <body>
+        <%@include file="navbarFragment.jsp" %>
+        <div class="container-fluid">
+            <div class="row">
+                <div id="left" class="col-xs-6">
+                    <div id="divToFill" class="pop col-md-12"></div>
+                </div>  <!-- END OF LEFT COLUMN -->  
+
+                <!--begin RIGHT COLUMN-->
+                <div id="right" class="container-fluid col-xs-4 col-xs-offset-2">
+                    <div id="search-div" class="col-xs-12">
+                        <div id="search-input-div" class="col-xs-6 col-xs-offset-2">
+                            <input type="text" class="form-control" id="extampleField" placeholder="Search by Titles">
+                        </div>
+                        <div id="search-button-div" class="col-xs-4">
+                            <button type="button" class="btn btn-success">Search</button>
+                        </div>
+                        <div style="margin-bottom:20px;" id="search-input-div" class="col-xs-6 col-xs-offset-2">
+                            <input type="text" class="form-control" id="hashtag-search" placeholder="Search by #">
+                        </div>
+                        <div style="margin-bottom:20px;" id="search-button-div" class="col-xs-4">
+                            <button type="button" class="btn btn-success">Search</button>
+                        </div>
+                        <div  class="col-xs-4">
+                            <h3 style="margin-top:0px;">Categories</h3>
+                            <a><h4>Training(3)</h4></a>
+                            <a><h4>Travels(6)</h4></a>
+                            <a><h4>Style(10)</h4></a>
+                            <a><h4>Mission(3)</h4></a>
+                            <a><h4>Other(8)</h4></a>
+                        </div>
+                        <div class="col-xs-8">
+                            <div style="padding:0px;" class="col-xs-12">
+                                <h3 style="margin-top:0px;padding:0px;">Popular #</h3>
+                            </div>
+                            <div style="padding-left:0px;" class="col-xs-6">
+                                <a id="finning"><h5>#Finning</h5></a>
+                                <a id="training"><h5>#Training</h5></a>
+                                <a id="cute"><h5>#Cute</h5></a>
+                                <a id="echolocation"><h5>#Echolocation</h5></a>
+                                <a id="fuck-sharks"><h5>#FuckSharks</h5></a>
+                            </div>
+                            <div style="padding-left:0px;" class="col-xs-6">
+                                <a id="stalin-did-nothing-wrong"><h5>#StalinDidNothingWrong</h5></a>
+                                <a id="reject-capitalism"><h5>#RejectCapitalism</h5></a>
+                                <a id="rescue"><h5>#Rescue</h5></a>
+                                <a id="comrades-for-life"><h5>#ComradesForLife</h5></a>
+                                <a id="enemy-sub-locations"><h5>#EnemySubLocations</h5></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="popDivToFill" >
+                        <h4 class="col-md-12">POPULAR POSTS </h4>
+                        <!--BELOW IS THE MODEL FOR THE processPopularPosts(){} in JS-->
+                        <!-- <div class="col-md-12 right-min">
+                             <h4 class="col-md-6">POPULAR BLOG </h4>
+                             <h4 class="col-md-6">dd/mm/yy</h4>
+                             <div class="content-div-sm col-md-6">
+                                 <img src="https://www.czs.org/custom.czs/files/e3/e3649ee2-8a64-4cf3-a5a0-1d1d38123967.jpg" class="pic-sm image-responsive img-rounded" style="height:148px;width:210px"/>
+                             </div>
+                             <div class="content-div-sm col-md-6">
+                                 <p class="col-xs-12">MINI POPULAR BLOG 3 DOLPHINS DOLPHINS DOLPHINS DOLPHINS DOLPHINS DOLPHINS DOLPHINS DOLPHINS</p>
+                                 <div class="col-xs-12">
+                                     <h4 class="col-xs-6">(4)<span class="glyphicon glyphicon-comment"></span></h4>
+                                     <h4 class="col-xs-6">(4)<span class="glyphicon glyphicon-thumbs-up"></span></h4>
+                                 </div>
+                             </div>
+                         </div>-->
+
+
+                    </div> <!--GENERATED CONTENT FOR SMALL POPULAR BLOGS--> 
+                </div>  <!-- END OF RIGHT COLUMN -->
+            </div>
+        </div>
+        <script src="${pageContext.request.contextPath}/js/jquery-2.2.4.min.js"></script>
+        <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+        <script src="${pageContext.request.contextPath}/js/ZdolphinJavaScript.js"></script>
+
+    </body>
+</html>
+
+Database backup
+
+DROP DATABASE IF EXISTS CapstoneProject;
+CREATE DATABASE CapstoneProject;
+USE CapstoneProject;
+
+CREATE TABLE IF NOT EXISTS Categories(
+category_id INT AUTO_INCREMENT NOT NULL,
+category_name VARCHAR(50) UNIQUE NOT NULL,
+PRIMARY KEY (category_id)
+);
+
+CREATE TABLE IF NOT EXISTS Hashtags(
+hashtag_id INT AUTO_INCREMENT NOT NULL,
+hashtag_name VARCHAR(50) UNIQUE NOT NULL,
+PRIMARY KEY (hashtag_id)
+);
+
+CREATE TABLE IF NOT EXISTS Statuses(
+status_id INT AUTO_INCREMENT NOT NULL,
+status_name VARCHAR(50) NOT NULL,
+PRIMARY KEY (status_id)
+);
+
+CREATE TABLE IF NOT EXISTS Posts(
+post_id INT AUTO_INCREMENT NOT NULL,
+title VARCHAR(65) NOT NULL,
+author VARCHAR (40) NOT NULL,
+pub_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, 
+category_id INT NOT NULL,
+status_id INT NOT NULL,
+likes INT NOT NULL DEFAULT 0,
+photo_url NVARCHAR(400) NOT NULL,
+content NVARCHAR(10000) NOT NULL,
+synopsis NVARCHAR(500) NOT NULL,
+FOREIGN KEY (category_id) REFERENCES Categories(category_id),
+FOREIGN KEY (status_id) REFERENCES Statuses(status_id),
+PRIMARY KEY (post_id)
+);
+
+CREATE TABLE IF NOT EXISTS Comments(
+comment_id INT AUTO_INCREMENT NOT NULL,
+comment_text VARCHAR(200) NOT NULL,
+post_id INT NOT NULL,
+FOREIGN KEY (post_id) REFERENCES Posts (post_id),
+PRIMARY KEY (comment_id)
+);
+
+-- Do we need this table?  I'm under the impression that we don't 
+
+-- CREATE TABLE IF NOT EXISTS CategoriesPosts(
+-- cat_post_id INT AUTO_INCREMENT NOT NULL,
+-- post_id INT NOT NULL,
+-- category_id INT NOT NULL,
+-- FOREIGN KEY (post_id) REFERENCES Posts (post_id),
+-- FOREIGN KEY (category_id) REFERENCES Categories (category_id),
+-- PRIMARY KEY (cat_post_id)
+-- );
+
+CREATE TABLE IF NOT EXISTS HashtagsPosts(
+post_id INT NOT NULL,
+hashtag_id INT NOT NULL,
+FOREIGN KEY (post_id) REFERENCES Posts (post_id),
+FOREIGN KEY (hashtag_id) REFERENCES Hashtags (hashtag_id)
+);
+
+-- photo_url is not included because it should be stored as part of  content
+
+CREATE TABLE IF NOT EXISTS Pages(
+page_id INT AUTO_INCREMENT NOT NULL,
+title VARCHAR(15) NOT NULL,
+mapping_url VARCHAR(50) NOT NULL,
+content VARCHAR(10000) NOT NULL,
+PRIMARY KEY (page_id)
+);
+
+INSERT INTO Categories (category_id, category_name)
+				VALUES  ( 1, "Training"),
+						( 2, "Travels"),
+                        ( 3, "Style"),
+						( 4, "Personnel"),
+                        ( 5, "Mission"),
+                        ( 6, "Other");
+                        
+INSERT INTO Hashtags (hashtag_id, hashtag_name)
+				VALUES  ( 1, "#Finning"),
+						( 2, "#Training"),
+                        ( 3, "#Cute"),
+                        ( 4, "#Echolocation"),
+                        ( 5, "#FuckSharks"),
+						( 6, "#StalinDidNothingWrong"),
+                        ( 7, "#RejectCapitalism"),
+                        ( 8, "#Rescue"),
+                        ( 9, "#ComradesForLife"),
+                        ( 10, "#EnemySubLocations");
+
+INSERT INTO Statuses (status_id, status_name)
+				VALUES  ( 1, "Edit Mode"),
+						( 2, "Awaiting Approval"),
+                        ( 3, "Posted");
+
+-- pub_date (timestamp) is omitted from this because it is set automatically 
+INSERT INTO Posts (post_id, title, author, category_id, status_id, likes, photo_url, content, synopsis)
+			VALUES  ( 1, "Why Dolphins Prefer Communism", "Anastasia Romanov", 6, 3, 15, "https://www.extremetech.com/wp-content/uploads/2015/12/DolphinJump-640x353.jpg", "<p><img style='display: block; margin-left: auto; margin-right: auto;' src='https://www.extremetech.com/wp-content/uploads/2015/12/DolphinJump-640x353.jpg' alt='' width='640' height='353' /></p><p>&nbsp;</p><div class='col-md-6 col-md-offset-1'><h2>Why Dolphins Prefer Communism</h2></div><div class='col-md-4'><h4>11/23/2016</h4></div><div id='text-div1' class='col-md-8 col-md-offset-1'><h2>I am often asked, upon meeting a new face in America 'Anastasia, what do you do for a living?'. I do not hold this question against them. After all, when you spend your whole life under Capitalism, it is hard to see other human beings as anything other than exploitable labor.<br /><br />To this question I respond honestly, and in turn their faces respond in honest amazement. 'Wow! You really train dolphins for a living? Thats so Cool!' It is here that the inqusition begins. <br /><br />'Can you talk to dolphins?!' no.<br /><br />'Can you teach a dolphin to play fetch?!' yes.<br /><br />'Can you perform at my 5 year olds birthday party?!' maybe.<br /><br />'Are they really as rapey as people say?!' All my dolphins are subject to rigorous background checks. <br /><br />'Are they really smarter than people?!'<br /><br />This is the question that I ask my self every night. Could it be that a lack of thumbs are the only thing holding back this hyper intellegent species from ruling our world?<br /><br />What have humans built with their thumbs? They've built weapons to subjugate their fellow man. They've built factories to exploit their fellow mans labor. They created money, so that the few could rule the many simply by changing a number.<br /><br />Yet while man struggles amongst the rocks and the dust, the dolphin lives in harmony beneath the waves. The dolphin cannot build weapons, but when they fight, it is not amongst them selves, but against predatory sharks and squids. A dolphin cannot build a factory, but when they require food, they hunt in unity and share their bounty. A dolphin has no need for money, but if they had it, they would swollow it and choke to death. (STOP THROWING COINS IN MY FUCKING DOLPHIN TANK). <br /><br />Pure and simple, dolphins have chosen to live under communism. And for that their intellegence is without question. <br /><br />-Anastasia Romanov</h2></div>", "Dolphin, Dolphin, BLAHBLAHBLAH Dolphin, Dolphin, BLAHBLAHBLAH Dolphin, Dolphin, BLAHBLAHBLAH Dolphin, Dolphin, BLAHBLAHBLAH "),
+					( 2, "My Escape from Russia on Dolphinback", "Anastasia Romanov", 2, 3, 12, "http://www.freakingnews.com/pictures/125500/Vladimir-Putin-Riding-a-Dolphin-125674.jpg", "<p><img style='display: block; margin-left: auto; margin-right: auto;' src='http://www.freakingnews.com/pictures/125500/Vladimir-Putin-Riding-a-Dolphin-125674.jpg' width='403' height='322' /></p><p style='text-align: center;'>&nbsp;</p><h1 style='text-align: center;'>Многие думают, что Lorem Ipsum - взятый с потолка псевдо-латинский набор слов, но это не совсем так. Его корни уходят в один фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад. Ричард МакКлинток, профессор латыни из колледжа Hampden-Sydney, штат Вирджиния, взял одно из самых странных слов в Lorem Ipsum, 'consectetur', и занялся его <span style='text-decoration: underline;'><strong>поисками в классической</strong></span> латинской литературе. В результате он нашёл неоспоримый первоисточник Lorem Ipsum в разделах 1.10.32 и 1.10.33 книги 'de Finibus Bonorum et Malorum' ('О пределах добра и зла'), написанной Цицероном в 45 году н.э. Этот трактат по теории этики был очень популярен в эпоху Возрождения. Первая строка Lorem Ipsum, 'Lorem ipsum dolor sit amet..', происходит от одной из строк в разделе 1.10.32</h1>", "Dolphin, Dolphin, BLAHBLAHBLAH Dolphin, Dolphin, BLAHBLAHBLAH Dolphin, Dolphin, BLAHBLAHBLAH Dolphin, Dolphin, BLAHBLAHBLAH "),
+					( 3, "Operation D.O.L.P.H.I.N.", "Anastasia Romanov", 4, 3, 1, "http://i340.photobucket.com/albums/o359/Demonicraze/girls%20with%20weapons/Russian-1-2.jpg", "<p>&nbsp;</p><p style='text-align: center;'><a href='http://i340.photobucket.com/albums/o359/Demonicraze/girls%20with%20weapons/Russian-1-2.jpg'><img src='http://i340.photobucket.com/albums/o359/Demonicraze/girls%20with%20weapons/Russian-1-2.jpg' /></a></p><h1 style=text-align: center;'><span style='background-color: #993300; color: #ffffff;'>Love and Dolphins... &nbsp; and&nbsp;GUNS</span></h1>", "Dolphin, Dolphin, BLAHBLAHBLAH Dolphin, Dolphin, BLAHBLAHBLAH Dolphin, Dolphin, BLAHBLAHBLAH Dolphin, Dolphin, BLAHBLAHBLAH "),
+                    ( 4, "Meet My New Assistant, Svetlana Aleksandrovna Valova", "Anastasia Romanov", 5, 3, 22, "http://girlswithguns.org/wp-content/uploads/2015/04/RozaSharina.jpg", "<p>&nbsp;</p><p style='text-align: center;'><img src='http://girlswithguns.org/wp-content/uploads/2015/04/RozaSharina.jpg' width='482' height='325' /></p><p style='text-align: center;'>&nbsp;</p><p style='text-align: center;'>Hi, I'm Lana, long time dolphin lover and now a proud member of Team Classified Dolphin Training. &nbsp;</p><p style='text-align: center;'>I look forward to working closely with the community Americanski in 'training' these marvelous animals to 'build a better world'.&nbsp;</p>", "Dolphin, Dolphin, BLAHBLAHBLAH Dolphin, Dolphin, BLAHBLAHBLAH Dolphin, Dolphin, BLAHBLAHBLAH Dolphin, Dolphin, BLAHBLAHBLAH "),
+                    ( 5, "Why Swedish Dolphins Resent MIT alum Dolph Lundgren", "Svetlana Aleksandrovna Valova", 6, 1, 0, "https://upload.wikimedia.org/wikipedia/en/3/33/Lundgren_Ivan_Drago.jpg", "<p>&nbsp;</p><p style='text-align: center;'><img src='https://upload.wikimedia.org/wikipedia/en/3/33/Lundgren_Ivan_Drago.jpg' alt='' width='225' height='280' />&nbsp;</p><h1 style='text-align: center;'>DOLPH LUNDGREN CONTENT</h1>", "Dolphin, Dolphin, BLAHBLAHBLAH Dolphin, Dolphin, BLAHBLAHBLAH Dolphin, Dolphin, BLAHBLAHBLAH Dolphin, Dolphin, BLAHBLAHBLAH "),
+                    ( 6, "That Time I Took A Bunch of LSD and Could Speak Dolphinese", "Svetlana Aleksandrovna Valova", 1, 2, 0, "http://www.smithsonianchannel.com/site/image-bin/images/0_0_3415122/0_0_3415122_01_640x333.jpg", "<p>&nbsp;</p><p style='text-align: center;'><img src='http://www.smithsonianchannel.com/site/image-bin/images/0_0_3415122/0_0_3415122_01_640x333.jpg' /></p><h1 style='text-align: center;'>Love and Dolphins... &nbsp; and DRUGS</h1>", "Dolphin, Dolphin, BLAHBLAHBLAH Dolphin, Dolphin, BLAHBLAHBLAH Dolphin, Dolphin, BLAHBLAHBLAH Dolphin, Dolphin, BLAHBLAHBLAH ");
+
+INSERT INTO Comments  (comment_id, comment_text, post_id)
+			       VALUES (1, "Wow who would have guessed someone who works around so many blowholes would become one themselves. Get a job, you useless HIPPIE!!", 1),
+						  (2, "So true! I guess you need more than thumbs to seize the means of production", 1),
+						  (3, "Coins sink in water, but if you give enough to a dolphin he will just float there...  Can't explain that!", 1),
+                          (4, "AMAZING!!  I'm crying!!  You are a hero to women and sea creatures everywhere!!!!!", 2),
+                          (5, "Comment Removed.", 3),
+                          (6, "Comment will be declassified 16 May 2042", 3),
+                          (7, "Comment Removed.", 3),
+                          (8, "Comment will be declassified on 1 January 2110", 3),
+                          (9, "What a Baaaaaaaaaaaaaaaaaabe!", 4),
+                          (10, "What year was that picture taken!?!  Do the Russians already have time travel technology, or just really shitty photography equipment? U-S-A! U-S-A!", 4),
+                          (11, "Cuz he's a douche. Duh.", 5),
+                          (12, "The guy speaks like 8 languages and looks like that.  It would be an act of god if he WASN'T a douche", 5),
+                          (13, "Those dolphins clearly don't understand who they're fuckin with.", 5),
+                          (14, "Is that legal?", 6),
+                          (15, "Did you take the LSD straight-up, or did you boof it like a real hero would have?", 1);
+                          
+INSERT INTO HashtagsPosts(post_id, hashtag_id)
+								VALUES (1, 7), 
+									   (1, 8), 
+									   (2, 9), 
+									   (2, 1), 
+									   (2, 8), 
+									   (3, 10), 
+									   (3, 9), 
+									   (4, 3), 
+									   (4, 2), 
+									   (4, 9), 
+									   (5, 1), 
+									   (6, 1), 
+									   (6, 2), 
+									   (6, 9);
+     
+     

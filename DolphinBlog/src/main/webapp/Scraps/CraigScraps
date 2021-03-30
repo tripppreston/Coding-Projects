@@ -1,0 +1,650 @@
+/* global tinyMCE */
+
+$(document).ready(function () {
+
+    loadMainPage();
+    loadHashtagSelectMenu();
+    loadCategorySelectMenu();
+
+
+
+
+
+
+
+//TINYMCE STUFF================================
+
+//    BELOW IS A DIFFERENT METHOD FOR ATTEMPTING TO CAPTURE TINYMCE DATA
+//    PLEASE DO NOT DELETE - CS
+    $('#submitPostBtn').click(function (event) {
+        event.preventDefault();
+        addPost();
+        console.log(tinyMCE.activeEditor.getContent());
+    });
+
+//    $('#submitPageBtn').click(function (event) {
+//        event.preventDefault();
+//        console.log(tinyMCE.activeEditor.getContent());
+//    });
+
+
+//    $('#submitPostBtn').click(function (event) {
+//        event.preventDefault();
+//        console.log($('#postsTinyMCE').html());
+//    });
+
+//    $('#submitPageBtn').click(function (event) {
+//        event.preventDefault();
+//        console.log($('#pagesTinyMCE').html());
+//    });
+
+
+//END TINYMCE STUFF============================
+
+//
+    $('#reject-capitalism').click(function (event) {
+        fRejectCapitalism();
+    });
+    $('#finning').click(function (event) {
+        fFinning();
+    });
+    $('#training').click(function (event) {
+        fTraining();
+    });
+    $('#cute').click(function (event) {
+        fCute();
+    });
+    $('#echolocation').click(function (event) {
+        fEcholocation();
+    });
+    $('#fuck-sharks').click(function (event) {
+        fFuckSharks();
+    });
+    $('#stalin-did-nothing-wrong').click(function (event) {
+        fStalinDidNothingWrong();
+    });
+    $('#rescue').click(function (event) {
+        fRescue();
+    });
+    $('#comrades-for-life').click(function (event) {
+        fComradesForLife();
+    });
+    $('#enemy-sub-locations').click(function (event) {
+        fEnemySubLocations();
+    });
+
+
+});
+
+
+
+
+
+
+
+
+//==================
+//    functions
+//==================
+
+
+function loadMainPage() {
+    $.ajax({
+        url: "blogposts",
+        type: "GET"
+    }).success(function (data) {
+        processPosts(data);
+        processPopularPosts(data);
+    });
+}
+
+function loadHashtagSelectMenu() {
+    $.ajax({
+        url: "hashtags",
+        type: "GET"
+    }).success(function (hashtags) {
+        var hashtagOptions = $('#add-post-hashtags');
+        $.each(hashtags, function (index, hashtag) {
+            hashtagOptions.append($('<option>')).attr({'value': hashtag.hashtag})
+                    .text(hashtag.hashtag);
+        });
+    });
+}
+
+function loadCategorySelectMenu() {
+    $.ajax({
+        url: "categories",
+        type: "GET"
+    }).success(function (categories) {
+        var categoryOptions = $('#add-post-category');
+        $.each(categories, function (index, category) {
+            categoryOptions.append($('<option>')).attr({'value': category.categoryID})
+                    .text(category.categoryName);
+        });
+    });
+}
+
+
+function processPosts(posts) {
+    var postDiv = $('#divToFill');
+    $.each(posts, function (index, post) {
+
+        postDiv.append($("<div>")
+                .attr({
+                    'class': "col-md-12 recent",
+                    'data-post-id': post.postID
+                })
+                .append($("<div>")
+                        .attr({
+                            'class': "col-md-6 col-md-offset-2"
+                        })
+                        .append($("<h3>")
+                                .append($("<a>")
+                                        .attr({
+                                            'href': "testPage/" + post.postID,
+                                            'method': 'POST'
+
+                                        })
+                                        .append(post.title))))
+                .attr({
+                    'class': "title-md"
+                })
+                .append($("<div>")
+                        .attr({
+                            'class': "col-md-4"
+                        }).append($("<h4>")
+                        .attr({
+                            'class': "date-md"
+                        })
+                        .text(convertDate(post.pubDate))))
+                .append($("<div>")
+                        .attr({
+                            'class': "pic-div-md col-md-6 col-md-offset-2"
+                        })
+                        .append($("<img>")
+                                .attr({
+                                    'src': post.photoUrl,
+                                    'class': "pic-md image-responsive img-rounded"
+                                })))
+                .append($("<div>")
+                        .attr({
+                            'class': "text-div-md col-md-8 col-md-offset-2"
+                        })
+                        .append($("<p>")
+                                .text(post.synopsis)))
+                .append($("<div>")
+                        .attr({
+                            'class': "col-xs-2 col-xs-offset-2"
+                        })
+                        .append($("<h3>")
+                                .text("( # )")
+                                .append($("<span>")
+                                        .attr({
+                                            'class': "glyphicon glyphicon-comment"
+                                        }))))
+                .append($("<div>")
+                        .attr({
+                            'class': "col-xs-2 col-xs-offset-5"
+                        })
+                        .append($("<h3>")
+                                .text("( " + post.likes + " )")
+                                .append($("<span>")
+                                        .attr({
+                                            'class': "glyphicon glyphicon-thumbs-up"
+                                        }))))
+                );
+    });
+}
+
+
+
+function addPost() {
+//  VAR NEEDED IN FORM
+//  title;
+//  author;
+//  categoryId (dropdown in html)
+//  List<String> hashtags;  OPTIONAL
+//  content;
+//  photoUrl;
+//  synopsis;
+//    
+//  AUTO_ASSIGNED VAR
+//  postID - assigned automatically in the DB
+//  statusId is set by DEFAULT to Edit Mode when entered into the database;
+//  pubDate - automatically timestamped in DB
+//  likes -- automatically set to 0 ON INSERT in the database
+//  List<String> comments - set to null
+
+
+    var postTitle = $("#add-post-title").val();
+    var postAuthor = $("#add-post-author").val();
+    var postCategory = $("#add-post-category").val();
+    var postPhotoUrl = $("#add-post-photoUrl").val();
+    var postContent = tinyMCE.activeEditor.getContent();
+    var postSynopsis = $("#add-post-synopsis").val();
+    var postHashtags = [];
+    $('#add-post-hashtags > option').each(function () {
+        if (this.selected === true) {
+            postHashtags.push(this.value);
+        }
+    });
+    var data = JSON.stringify({
+// DTO variable name : variable from above
+        title: postTitle,
+        author: postAuthor,
+        categoryId: postCategory,
+        photoUrl: postPhotoUrl,
+        synopsis: postSynopsis,
+        content: postContent,
+        hashtags: postHashtags
+
+    });
+    console.log(data);
+    $.ajax({
+        url: 'posts/add',
+        type: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        'dataType': 'json',
+        data: data
+    }).success(function (data) {
+
+        postTitle.val(" ");
+        postAuthor.val(" ");
+        postCategory.prop('selectedIndex', 0);
+        postPhotoUrl.val(" ");
+        $("#postsTinyMCE").val(" ");
+        postSynopsis.val(" ");
+        $('#add-post-hashtags > option').removeAttr("selected");
+    });
+
+}
+
+
+function processPopularPosts(posts) {
+    var popDiv = $('#popDivToFill');
+    $.each(posts, function (index, post) {
+
+        popDiv.append($("<div>").attr({'class': "col-md-12 right-min",
+            'data-post-id': post.postID})
+                .append($("<h4>").attr({'class': "title-sm col-md-12"}).text(post.title))
+                // I removed the date here.  it's unnecessary, and caused all sorts of formatting issues
+                .append($("<div>").attr({'class': "content-div-sm col-md-6"})
+                        .append($("<img>").attr({'src': post.photoUrl,
+                            'class': "pic-sm img-responsive img-rounded"})))
+                .append($("<div>").attr({'class': "content-div-sm col-md-6"})
+                        .append($("<p>").attr({'class': "col-xs-12"})
+                                .text(post.synopsis.substring(0, 83)))
+                        .append($("<div>").attr({'class': "col-xs-12"})
+                                .append($("<h4>").text("( # )")
+                                        .attr({'class': "col-xs-6"})
+                                        .append($("<span>").attr({
+                                            'class': "glyphicon glyphicon-comment"})))
+                                .append($("<h4>").text("( " + post.likes + " )")
+                                        .attr({'class': "col-xs-6"})
+                                        .append($("<span>")
+                                                .attr({
+                                                    'class': "glyphicon glyphicon-thumbs-up"
+                                                }))))
+
+
+                        ));
+    });
+}
+
+function fRejectCapitalism() {
+    var text = $('#hashtag-search');
+    text.val("#RejectCapitalism");
+
+}
+function fFinning() {
+    var text = $('#hashtag-search');
+    text.val("#Finning");
+
+}
+function fTraining() {
+    var text = $('#hashtag-search');
+    text.val("#Training");
+
+}
+function fCute() {
+    var text = $('#hashtag-search');
+    text.val("#Cute");
+
+}
+function fEcholocation() {
+    var text = $('#hashtag-search');
+    text.val("#Echolocation");
+
+}
+function fFuckSharks() {
+    var text = $('#hashtag-search');
+    text.val("#FuckSharks");
+
+}
+function fStalinDidNothingWrong() {
+    var text = $('#hashtag-search');
+    text.val("#StalinDidNothingWrong");
+
+}
+function fRescue() {
+    var text = $('#hashtag-search');
+    text.val("#Rescue");
+
+}
+function fComradesForLife() {
+    var text = $('#hashtag-search');
+    text.val("#ComradesForLife");
+
+}
+function fEnemySubLocations() {
+    var text = $('#hashtag-search');
+    text.val("#EnemySubLocations");
+
+}
+
+function convertDate(timeStamp) {
+    // 2016-11-28 17:54:15.0
+    var date = timeStamp.substring(0, 11);
+    if (date.substring(9, 10) !== " ") {
+        var mm = date.substring(5, 7);
+        var dd = date.substring(8, 10);
+    } else if (date.substring(8, 10) === "  ") {
+        var mm = date.substring(5, 6);
+        var dd = date.substring(7, 8);
+    } else if (date.substring(8, 9) !== " " && date.substring(9, 10) === " ") {
+        if (date.substring(6, 7) === "-") {
+            var mm = date.substring(5, 6);
+            var dd = date.substring(7, 9);
+        } else {
+            var mm = date.substring(5, 7);
+            var dd = date.substring(8, 9);
+
+        }
+    }
+    var yyyy = timeStamp.substring(0, 4);
+    return mm + " - " + dd + " - " + yyyy;
+}
+
+//===============================
+//       TinyMCE Init and Setup
+//===============================
+
+tinymce.init({
+    selector: '.tinyMCE',
+    height: 300,
+//                skin: 'charcoal', // can be used to specify a custom skin. See http://skin.tinymce.com/
+    plugins: [
+        'advlist autolink autosave charmap hr link lists print preview ',
+        ' wordcount visualblocks visualchars image imagetools',
+        'table contextmenu emoticons template',
+        'paste save searchreplace textcolor'
+    ],
+    // "contextmenu" refers to the menu options available when the user right-clicks
+    contextmenu: "link image",
+    imagetools_toolbar: "rotateleft rotateright | flipv fliph | editimage imageoptions",
+//                imagetools_cors_hosts: ['imgur.com', 'otherdomain.com'], //we may need to use this option if we hook up an imgur acct
+//                content_css:'css/dolphinstyles.css',  //link to internal style sheet
+    toolbar: 'insertfile undo redo | styleselect | forecolor backcolor bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link charmap image emoticons | preview save'
+
+});
+
+==========================================================
+==========================================================
+==========================================================
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Posts (Admin)</title>
+        <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/css/dolphinStyles.css" rel="stylesheet">
+        <link rel="shortcut icon" href="${pageContext.request.contextPath}/img/icon.png">
+        <style>
+            body{
+                background: url('https://static.pexels.com/photos/656/sea-water-ocean-dark.jpg');
+                background-repeat: no-repeat;
+                background-position: center center;
+                background-attachment: fixed;
+                -webkit-background-size: cover;
+                -moz-background-size: cover;
+                -o-background-size: cover;
+                background-size: cover;
+                font-family: 'Oswald', sans-serif;
+                color:white;
+            }
+
+            /* Styles specific to this page*/
+
+            .adminButton{
+                width:50px !important;                
+            }
+            th{
+                font-size: 30px;
+            }
+
+
+        </style>
+    </head>
+    <body>
+        <%@include file="navbarFragment.jsp" %>
+        <div class="container-fluid">
+            <div>
+                <div class="col-sm-10 col-sm-offset-1">
+                    <div class="row">
+                        <form class="form-horizontal">
+                            <div style="margin-top:40px;" class="form-group row">
+                                <div class="col-sm-6 col-sm-offset-2">
+                                    <input type="Search" class="form-control" id="" placeholder="Search Posts">
+                                </div>
+                                <div>
+                                    <button type="button" class="btn btn-info col-sm-2">Search</button>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+
+                    <div class="row">
+                        <table class="table" style="color:white;">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Active Posts</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <!--THIS IS WHERE WE WILL APPEND DATABASE INFORMATION-->
+                                <!--mysql: WHERE STATUS = "POSTED"-->
+                                <!--ONLY VISIBLE WHEN OWNER IS LOGGED IN-->
+                                <tr>
+                                    <th scope="row"><h3 style="margin:0px;">1</h3></th>
+                                    <td><h3 style="margin:0px;">Soviet Exile Drowned at Sea World</h3></td>
+                                    <td class = "adminButton"><button type="button" class="btn btn-success">View</button></td>
+                                    <td style="width:50px;"><button type="button" class="btn btn-warning">Unpost</button></td>
+                                    <td class = "adminButton"><button type="button" class="btn btn-danger" >Delete</button></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row"><h3 style="margin:0px;">2</h3></th>
+                                    <td><h3 style="margin:0px;">Spy Suspected after Submarine Mission Failure</h3></td>
+
+                                    <td class = "adminButton"><button type="button" class="btn btn-success">View</button></td>
+                                    <td class = "adminButton"><button type="button" class="btn btn-warning">Unpost</button></td>
+                                    <td class = "adminButton"><button type="button" class="btn btn-danger" >Delete</button></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row"><h3 style="margin:0px;">3</h3></th>
+                                    <td><h3 style="margin:0px;">Crazed Fisherman claims Dolphins convinced him to attempt Assassination</h3></td>
+
+                                    <td class = "adminButton"><button type="button" class="btn btn-success">View</button></td>
+                                    <td class = "adminButton"><button type="button" class="btn btn-warning">Unpost</button></td>
+                                    <td class = "adminButton"><button type="button" class="btn btn-danger" >Delete</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                    <div class="row">
+                        <table class="table" style="color:white;">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Awaiting Approval</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!--THIS IS WHERE WE WILL APPEND DATABASE INFORMATION-->
+                                <!--mysql: WHERE STATUS = "AWAITING"-->
+                                <!--ONLY VISIBLE WHEN OWNER IS LOGGED IN-->
+                                <tr>
+                                    <th scope="row"><h3 style="margin:0px;">1</h3></th>
+                                    <td><h3 style="margin:0px;">How to make a Cyanide capsule that won't dissolve in salt water</h3></td>
+
+                                    <td class = "adminButton"><button type="button" class="btn btn-primary" >Edit</button></td>
+                                    <td class = "adminButton"><button type="button" class="btn btn-warning">Reject</button></td>
+                                    <td class = "adminButton"><button type="button" class="btn btn-success" >Post</button></td>
+                                    <td class = "adminButton"><button type="button" class="btn btn-danger" >Delete</button></td>
+
+                                </tr>
+                                <tr>
+                                    <th scope="row"><h3 style="margin:0px;">2</h3></th>
+                                    <td><h3 style="margin:0px;">I definitely shouldn't have used google translate to find out what that meant</h3></td>
+
+                                    <td class = "adminButton"><button type="button" class="btn btn-primary" >Edit</button></td>
+                                    <td class = "adminButton"><button type="button" class="btn btn-warning">Reject</button></td>
+                                    <td class = "adminButton"><button type="button" class="btn btn-success" >Post</button></td>
+                                    <td class = "adminButton"><button type="button" class="btn btn-danger" >Delete</button></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row"><h3 style="margin:0px;">3</h3></th>
+                                    <td><h3 style="margin:0px;">Do yous know to write post how? I no England speak</h3></td>
+
+                                    <td class = "adminButton"><button type="button" class="btn btn-primary" >Edit</button></td>
+                                    <td class = "adminButton"><button type="button" class="btn btn-warning">Reject</button></td>
+                                    <td class = "adminButton"><button type="button" class="btn btn-success" >Post</button></td>
+                                    <td class = "adminButton"><button type="button" class="btn btn-danger" >Delete</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <table class="table" style="color:white;">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Edit Mode (Employee Queue)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row"><h3 style="margin:0px;">1</h3></th>
+                                    <td><h3 style="margin:0px;">How to make a Cyanide capsule that won't dissolve in salt water</h3></td>
+
+
+                                    <td class = "adminButton"><button type="button" class="btn btn-primary" >Edit</button></td>
+                                    <td class = "adminButton"><button type="button" class="btn btn-success" >Submit</button></td>
+
+                                </tr>
+                                <tr>
+                                    <th scope="row"><h3 style="margin:0px;">2</h3></th>
+                                    <td><h3 style="margin:0px;">I definitely shouldn't have used google translate to find out what that meant</h3></td>
+
+                                    <td class = "adminButton"><button type="button" class="btn btn-primary" >Edit</button></td>
+                                    <td class = "adminButton"><button type="button" class="btn btn-success" >Submit</button></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row"><h3 style="margin:0px;">3</h3></th>
+                                    <td><h3 style="margin:0px;">Do yous know to write post how? I no England speak</h3></td>
+                                    <td class = "adminButton"><button type="button" class="btn btn-primary" >Edit</button></td>
+                                    <td class = "adminButton"><button type="button" class="btn btn-success" >Submit</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                    <h1>Create A New Post:</h1> 
+                    <form target='#' method="post">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class='form-group col-sm-5'>
+                                    <h3>Title:</h3>   
+                                    <input type='text' id="add-post-title" class="input-lg form-control"/>
+                                </div>
+                                <div class='form-group col-sm-offset-1 col-sm-5'>
+                                    <h3>Author:</h3>   
+                                    <input type='text'id="add-post-author" class="input-lg form-control"/>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="col-sm-5">
+                                    <h3>Category:</h3> 
+                                    <select id="add-post-category" class="input-lg form-control">
+                                        <!--automatically generate JS content here-->
+                                        <option value="1">Category 1</option>
+                                        <option value="2">Category 2</option>
+                                        <option value="3">Category 3</option>
+                                        <option value="4">Category 4</option>
+                                        <option value="5">Category 5</option>
+                                    </select>
+                                </div>
+                                <div class='form-group col-sm-5 col-sm-offset-1'>
+                                    <h3>Hashtags:</h3> 
+                                    <select multiple id="add-post-hashtags" class="input-lg form-control">
+                                        <!--automatically generate JS content here-->
+                                        
+                                        <option value="11">Hashtag 1</option>
+                                        <option value="22">Hashtag 2</option>
+                                        <option value="33">Hashtag 3</option>
+                                        <option value="44">Hashtag 4</option>
+                                        <option value="55">Hashtag 5</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='form-group col-sm-11'>
+                            <h3>Photo URL:</h3>   
+                            <input id="add-post-photoUrl" type='text' class="input-lg form-control"/>
+                        </div>
+                        <div class="col-sm-11 form-group">
+                            <h3>Synopsis</h3>
+                            <textarea class="form-control input-lg" id="add-post-synopsis"
+                                      placeholder="Write a few sentences here to summarize the content of this post"></textarea>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <h3>Content:</h3>
+                            <textarea id="postsTinyMCE" class="tinyMCE"></textarea>
+
+                            <br>
+                            <button id='submitPostBtn' class='btn btn-lg btn-success' type='submit'>Create Post</button>
+                        </div>
+
+                    </form>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+
+
+                </div>  
+            </div> <!-- end container div -->
+
+
+            <script src="${pageContext.request.contextPath}/js/jquery-2.2.4.min.js"></script>
+            <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+            <script src='//cdn.tinymce.com/4/tinymce.min.js'></script>
+            <script src="${pageContext.request.contextPath}/js/ZdolphinJavaScript.js"></script>
+    </body>
+</html>
