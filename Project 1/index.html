@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Calculator</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <header>
+      <h1>Calculator</h1>
+    </header>
+
+    <section class="container">
+      <form id="my-form">
+       
+        <div class="msg"></div>
+        
+        <div class="firstNumber">
+          <label for="variableOne">First Number</label>
+          <input type="number" id="variableOne">
+        </div>
+        <div class="operator">
+          <label for="equationType">Equation Type</label>
+         
+          <select name="equationType" id="equationType">
+            <!-- <option value="" disabled selected>Calculation Type</option> -->
+            <option value="addition">Addition</option>
+            <option value="subtraction">Subtraction</option>
+            <option value="multiplication">Multiplication</option>
+            <option value="division">Division</option>
+          </select>
+        </div>
+        <div class="secondNumber">
+          <label for="variableTwo">Second Number</label>
+          <input type="number" id="variableTwo">
+        </div>
+        <div> <input class="btn" type="submit" value="Equals"></div>
+       
+        <div class="finalAnswer">
+          <label for="finalAnswer"></label>
+          <input type="number" id="finalAnswer">
+        </div>
+      </form>
+
+      <h2 id="finalAnswer"></h2>
+    </section>
+    
+
+    <script src="main.js"></script>
+  </body>
+</html>
